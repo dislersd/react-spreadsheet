@@ -21,7 +21,7 @@ const Row = (props) => {
   return <div>{cells}</div>;
 };
 
-Row.PropTypes = {
+Row.propTypes = {
   handleChangedCell: PropTypes.func.isRequired,
   updateCells: PropTypes.func.isRequired,
   x: PropTypes.number.isRequired,

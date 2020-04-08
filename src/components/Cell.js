@@ -15,7 +15,7 @@ export default class Cell extends Component {
       props.value
     );
     this.timer = 0;
-    this.delay = 200;
+    this.delay = 50;
     this.prevent = false;
   }
 
@@ -95,10 +95,17 @@ export default class Cell extends Component {
     this.prevent = true;
 
     this.emitUnselectAllEvent();
-    this.setState({ editing: true, selecte: true });
+    this.setState({ editing: true, selected: true });
   };
 
   determineDisplay = ({ x, y }, value) => {
+    if (value.startsWith("=")) {
+      const res = this.props.executeFormula({ x, y }, value.slice(1));
+      if (res.error !== null) {
+        return "INVALID";
+      }
+      return res.result;
+    }
     return value;
   };
 
@@ -184,6 +191,7 @@ export default class Cell extends Component {
 
 Cell.propTypes = {
   onChangedValue: PropTypes.func.isRequired,
+  executeFormula: PropTypes.func.isRequired,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   value: PropTypes.string.isRequired,

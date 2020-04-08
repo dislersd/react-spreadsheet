@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Row from "./Row";
+import { Parser as FormulaParser } from 'hot-formula-parser'
 
 export default class Table extends Component {
   constructor(props) {
@@ -9,6 +10,7 @@ export default class Table extends Component {
     this.state = {
       data: {},
     };
+    this.parser = new FormulaParser()
   }
 
   handleChangedCell = ({ x, y }, value) => {

@@ -21,6 +21,10 @@ export default class Table extends Component {
         throw this.parser.Error(this.parser.ERROR_NOT_AVAILABLE);
       }
 
+      if (this.parser.cell.x === x && this.parser.cell.y === y) {
+        throw this.parser.Error(this.parser.ERROR_REF)
+      }
+
       if (!this.state.data[y] || !this.state.data[y][x]) {
         return done("");
       }
@@ -81,6 +85,9 @@ export default class Table extends Component {
     this.parser.cell = cell;
     let res = this.parser.parse(value);
     if (res.error != null) {
+      return res;
+    }
+    if (res.result.toString() === "") {
       return res;
     }
     if (res.result.toString().startsWith("=")) {
